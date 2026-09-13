@@ -1,0 +1,294 @@
+@import "tailwindcss";
+
+:root {
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-color: #000000;
+  --topic-color: #007bff;
+  --accent-color: #007bff;
+  --border-color: #e2e8f0;
+  --shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"], .dark {
+  --bg-color: #0b1120;
+  --card-bg: #1e293b;
+  --text-color: #ffffff;
+  --topic-color: #ffffff;
+  --accent-color: #38bdf8;
+  --border-color: #334155;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+@layer base {
+  html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, system-ui, -apple-system, sans-serif;
+    scroll-behavior: smooth;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.2s, color 0.2s;
+  }
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+  }
+  code, pre, kbd, samp {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+}
+
+/* =========================================================
+   TOPIC & WORD COLOR RULES:
+   - Light Mode: Topics are BLUE (#007bff), words are BLACK (#000000)
+   - Dark Mode: Topics are WHITE (#ffffff), words are WHITE (#ffffff)
+   ========================================================= */
+
+/* 1. LIGHT MODE (Default) */
+html:not(.dark) body:not(.dark) h1,
+html:not(.dark) body:not(.dark) h2,
+html:not(.dark) body:not(.dark) h3,
+html:not(.dark) body:not(.dark) h4,
+html:not(.dark) body:not(.dark) h5,
+html:not(.dark) body:not(.dark) h6,
+html:not(.dark) body:not(.dark) .topic-title,
+html:not(.dark) body:not(.dark) .tool-card h3,
+html:not(.dark) body:not(.dark) #app-logo {
+  color: #007bff !important;
+  -webkit-text-fill-color: #007bff !important;
+}
+
+html:not(.dark) body:not(.dark) p,
+html:not(.dark) body:not(.dark) label,
+html:not(.dark) body:not(.dark) li,
+html:not(.dark) body:not(.dark) .tool-card p,
+html:not(.dark) body:not(.dark) .calc-grid button:not(.bg-\[\#007bff\]\!) {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+html:not(.dark) body:not(.dark) span:not(.text-white):not(.text-red-500):not(.text-amber-500):not(.text-blue-600):not(.bg-blue-600) {
+  color: #000000;
+}
+
+/* 2. DARK MODE */
+html.dark, body.dark, [data-theme="dark"] {
+  --text-color: #ffffff;
+  --topic-color: #ffffff;
+}
+
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6,
+[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3,
+[data-theme="dark"] h4, [data-theme="dark"] h5, [data-theme="dark"] h6,
+.dark .tool-card h3, [data-theme="dark"] .tool-card h3,
+.dark .topic-title, [data-theme="dark"] .topic-title,
+.dark #app-logo, [data-theme="dark"] #app-logo {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.dark p, [data-theme="dark"] p,
+.dark label, [data-theme="dark"] label,
+.dark li, [data-theme="dark"] li,
+.dark .tool-card p, [data-theme="dark"] .tool-card p,
+.dark .tool-card span, [data-theme="dark"] .tool-card span,
+.dark span:not(.text-red-500):not(.text-amber-400), [data-theme="dark"] span:not(.text-red-500):not(.text-amber-400),
+.dark .calc-grid button:not(.bg-\[\#007bff\]\!) {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Dark Mode Inboxes, Search, Textareas, Selects */
+.dark input, .dark textarea, .dark select,
+[data-theme="dark"] input, [data-theme="dark"] textarea, [data-theme="dark"] select,
+.dark [contenteditable="true"], [data-theme="dark"] [contenteditable="true"],
+.dark .calc-display, [data-theme="dark"] .calc-display {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-color: #475569 !important;
+}
+
+.dark input::placeholder, .dark textarea::placeholder,
+[data-theme="dark"] input::placeholder, [data-theme="dark"] textarea::placeholder {
+  color: #94a3b8 !important;
+  -webkit-text-fill-color: #94a3b8 !important;
+}
+
+/* Preserved button text on colored backgrounds */
+button.bg-blue-600,
+button.bg-\[\#007bff\]\!,
+.action-btn,
+.back-btn {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* =========================================================
+   LIGHT MODE INPUTS
+   ========================================================= */
+input, textarea, select {
+  color: #0f172a;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #64748b;
+}
+
+/* Tool Cards */
+.tool-card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 24px 20px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.tool-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  border-color: var(--accent-color);
+}
+
+.tool-card h3 {
+  color: var(--topic-color);
+  margin-bottom: 8px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  transition: color 0.2s;
+}
+
+.tool-card p {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+.dark .tool-card p,
+[data-theme="dark"] .tool-card p {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.dark .tool-card span,
+[data-theme="dark"] .tool-card span {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.back-btn {
+  background: var(--accent-color);
+  color: #ffffff !important;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.back-btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+/* Calculator View Box */
+.calculator-box {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.calc-display {
+  width: 100%;
+  height: 54px;
+  font-size: 1.5rem;
+  text-align: right;
+  padding: 10px 14px;
+  margin-bottom: 15px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  outline: none;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.calc-grid button {
+  padding: 14px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, transform 0.05s;
+}
+
+.calc-grid button:active {
+  transform: scale(0.96);
+}
+
+.calc-grid button:hover {
+  background: var(--accent-color);
+  color: #fff !important;
+  border-color: var(--accent-color);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.input-group input {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  outline: none;
+}
+
+.action-btn {
+  padding: 12px 20px;
+  background: var(--accent-color);
+  color: #ffffff !important;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  transition: opacity 0.2s, transform 0.05s;
+}
+
+.action-btn:active {
+  transform: scale(0.98);
+}
+
+.action-btn:hover {
+  opacity: 0.92;
+}

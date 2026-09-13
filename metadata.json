@@ -1,0 +1,6 @@
+{
+  "name": "Tool Bazar",
+  "description": "Everyday browser utilities in one fast place. Media tools (Video to MP3, resize, background, compressor), word and text converters, calculators, developer tools, and date/time utilities.",
+  "requestFramePermissions": ["camera", "microphone", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
