@@ -16,6 +16,7 @@ import { ColorToolsView } from '../components/tools/ColorToolsView';
 import { GeneratorView } from '../components/tools/GeneratorView';
 import { MiscellaneousView } from '../components/tools/MiscellaneousView';
 import { NotepadView } from '../components/tools/NotepadView';
+import { AdsterraBanner } from '../components/AdsterraBanner';
 import { ArrowLeft, Search } from 'lucide-react';
 
 interface ToolPageProps {
@@ -153,6 +154,7 @@ export const ToolPage: React.FC<ToolPageProps> = ({
       onToggleFavorite={() => onToggleFavorite(tool.id)}
     >
       {renderToolComponent()}
+      <AdsterraBanner />
     </ToolLayout>
   );
 };

@@ -20,6 +20,7 @@ import { MiscellaneousView } from '../components/tools/MiscellaneousView';
 import { StylishTextGeneratorView } from '../components/tools/StylishTextGeneratorView';
 import { NotepadView } from '../components/tools/NotepadView';
 import { LegalModal } from '../components/legal/LegalModal';
+import { AdsterraBanner } from '../components/AdsterraBanner';
 
 interface HomePageProps {
   searchQuery: string;
@@ -577,6 +578,9 @@ export const HomePage: React.FC<HomePageProps> = ({
           Works in any language: Urdu, Roman Urdu ("hisab", "awaz", "tasveer", "umr"), English & Hindi
         </p>
       </div>
+
+      {/* Adsterra Top Banner Ad */}
+      <AdsterraBanner />
 
       {/* Main Content Area */}
       <div className="content-area w-full">
