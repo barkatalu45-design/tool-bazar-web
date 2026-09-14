@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://barkatalu45-design.github.io/tool-bazar-web/sitemap.xml
