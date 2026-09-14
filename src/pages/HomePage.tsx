@@ -577,9 +577,6 @@ export const HomePage: React.FC<HomePageProps> = ({
         <p className="text-[11px] mt-1.5 text-center text-slate-500 dark:text-slate-400">
           Smart multilingual search: Type keywords in English, Roman Urdu, or Hindi
         </p>
-
-        {/* Compact Ad Banner directly below search box */}
-        <CompactAdBanner className="mt-4" />
       </div>
 
       {/* Main Content Area */}
@@ -697,44 +694,42 @@ export const HomePage: React.FC<HomePageProps> = ({
               {renderToolComponent(selectedTool)}
             </div>
 
-            {/* Double Ads under tool: 728x90 Banner + 468x60 Banner */}
-            <AdsterraDoubleBanner />
+            {/* Compact Ad under tool */}
+            <AdsterraBanner />
           </div>
         )}
       </div>
 
-      {/* Always On Persistent Bottom Ad Bar - Displays everywhere */}
-      <AlwaysOnBottomAdBar />
+      {/* Clean Footer with Google AdSense Policy Links & Compact Non-Intrusive Bottom Ad */}
+      <footer className="pt-8 pb-10 text-center text-xs opacity-85 border-t border-[var(--border-color)] mt-12 space-y-4">
+        {/* Compact bottom ad right above Terms & Privacy links */}
+        <AlwaysOnBottomAdBar />
 
-      {/* Clean Footer with Google AdSense Policy Links - ONLY visible on Main / Subtools menu, hidden during active Tool usage */}
-      {currentStep !== 'tool' && (
-        <footer className="pt-8 pb-10 text-center text-xs opacity-75 border-t border-[var(--border-color)] mt-12 space-y-2">
-          <p className="font-semibold">🛠️ Tool Bazar — 260+ Free Everyday Tools Working 100% In Browser</p>
-          <div className="flex flex-wrap items-center justify-center gap-3 text-xs pt-1">
-            <button
-              onClick={() => setLegalModalType('privacy')}
-              className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-            >
-              Privacy Policy
-            </button>
-            <span className="opacity-40">•</span>
-            <button
-              onClick={() => setLegalModalType('terms')}
-              className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-            >
-              Terms of Service
-            </button>
-            <span className="opacity-40">•</span>
-            <button
-              onClick={() => setLegalModalType('contact')}
-              className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-            >
-              Contact
-            </button>
-          </div>
-          <p className="text-[11px] opacity-60">© {new Date().getFullYear()} Tool Bazar. Fast, Free & Secure.</p>
-        </footer>
-      )}
+        <p className="font-semibold text-neutral-800 dark:text-neutral-200">🛠️ Tool Bazar — 260+ Free Everyday Tools Working 100% In Browser</p>
+        <div className="flex flex-wrap items-center justify-center gap-3 text-xs pt-1">
+          <button
+            onClick={() => setLegalModalType('privacy')}
+            className="text-blue-600 dark:text-blue-400 hover:underline font-medium cursor-pointer"
+          >
+            Privacy Policy
+          </button>
+          <span className="opacity-40">•</span>
+          <button
+            onClick={() => setLegalModalType('terms')}
+            className="text-blue-600 dark:text-blue-400 hover:underline font-medium cursor-pointer"
+          >
+            Terms of Service
+          </button>
+          <span className="opacity-40">•</span>
+          <button
+            onClick={() => setLegalModalType('contact')}
+            className="text-blue-600 dark:text-blue-400 hover:underline font-medium cursor-pointer"
+          >
+            Contact
+          </button>
+        </div>
+        <p className="text-[11px] opacity-60">© {new Date().getFullYear()} Tool Bazar. Fast, Free & Secure.</p>
+      </footer>
 
       {/* Policy and Terms Modal for AdSense */}
       <LegalModal
