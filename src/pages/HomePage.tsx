@@ -20,7 +20,7 @@ import { MiscellaneousView } from '../components/tools/MiscellaneousView';
 import { StylishTextGeneratorView } from '../components/tools/StylishTextGeneratorView';
 import { NotepadView } from '../components/tools/NotepadView';
 import { LegalModal } from '../components/legal/LegalModal';
-import { AdsterraBanner, AdsterraDoubleBanner } from '../components/AdsterraBanner';
+import { AdsterraBanner, AdsterraDoubleBanner, CompactAdBanner, AlwaysOnBottomAdBar } from '../components/AdsterraBanner';
 
 interface HomePageProps {
   searchQuery: string;
@@ -577,6 +577,9 @@ export const HomePage: React.FC<HomePageProps> = ({
         <p className="text-[11px] mt-1.5 text-center text-slate-500 dark:text-slate-400">
           Smart multilingual search: Type keywords in English, Roman Urdu, or Hindi
         </p>
+
+        {/* Compact Ad Banner directly below search box */}
+        <CompactAdBanner className="mt-4" />
       </div>
 
       {/* Main Content Area */}
@@ -699,6 +702,9 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         )}
       </div>
+
+      {/* Always On Persistent Bottom Ad Bar - Displays everywhere */}
+      <AlwaysOnBottomAdBar />
 
       {/* Clean Footer with Google AdSense Policy Links - ONLY visible on Main / Subtools menu, hidden during active Tool usage */}
       {currentStep !== 'tool' && (
