@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Header } from './components/Header';
 import { HomePage } from './pages/HomePage';
 import { ToolPage } from './pages/ToolPage';
+import { AntiAdBlockerModal } from './components/AntiAdBlockerModal';
 
 export default function App() {
   // Theme Management
@@ -144,6 +145,9 @@ export default function App() {
             <span>{toastMsg}</span>
           </div>
         )}
+
+        {/* Anti-AdBlocker Detection Modal */}
+        <AntiAdBlockerModal />
       </div>
     </HashRouter>
   );

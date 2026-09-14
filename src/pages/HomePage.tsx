@@ -20,7 +20,7 @@ import { MiscellaneousView } from '../components/tools/MiscellaneousView';
 import { StylishTextGeneratorView } from '../components/tools/StylishTextGeneratorView';
 import { NotepadView } from '../components/tools/NotepadView';
 import { LegalModal } from '../components/legal/LegalModal';
-import { AdsterraBanner } from '../components/AdsterraBanner';
+import { AdsterraBanner, AdsterraDoubleBanner } from '../components/AdsterraBanner';
 
 interface HomePageProps {
   searchQuery: string;
@@ -574,13 +574,10 @@ export const HomePage: React.FC<HomePageProps> = ({
             </button>
           )}
         </div>
-        <p className="text-[11px] mt-1.5 text-center text-black dark:text-white">
-          Works in any language: Urdu, Roman Urdu ("hisab", "awaz", "tasveer", "umr"), English & Hindi
+        <p className="text-[11px] mt-1.5 text-center text-slate-500 dark:text-slate-400">
+          Smart multilingual search: Type keywords in English, Roman Urdu, or Hindi
         </p>
       </div>
-
-      {/* Adsterra Top Banner Ad */}
-      <AdsterraBanner />
 
       {/* Main Content Area */}
       <div className="content-area w-full">
@@ -696,37 +693,42 @@ export const HomePage: React.FC<HomePageProps> = ({
             <div className="w-full">
               {renderToolComponent(selectedTool)}
             </div>
+
+            {/* Double Ads under tool: 728x90 Banner + 468x60 Banner */}
+            <AdsterraDoubleBanner />
           </div>
         )}
       </div>
 
-      {/* Clean Footer with Google AdSense Policy Links */}
-      <footer className="pt-8 pb-10 text-center text-xs opacity-75 border-t border-[var(--border-color)] mt-12 space-y-2">
-        <p className="font-semibold">🛠️ Tool Bazar — 260+ Free Everyday Tools Working 100% In Browser</p>
-        <div className="flex flex-wrap items-center justify-center gap-3 text-xs pt-1">
-          <button
-            onClick={() => setLegalModalType('privacy')}
-            className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-          >
-            Privacy Policy
-          </button>
-          <span className="opacity-40">•</span>
-          <button
-            onClick={() => setLegalModalType('terms')}
-            className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-          >
-            Terms of Service
-          </button>
-          <span className="opacity-40">•</span>
-          <button
-            onClick={() => setLegalModalType('contact')}
-            className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-          >
-            Contact
-          </button>
-        </div>
-        <p className="text-[11px] opacity-60">© {new Date().getFullYear()} Tool Bazar. Fast, Free & Secure.</p>
-      </footer>
+      {/* Clean Footer with Google AdSense Policy Links - ONLY visible on Main / Subtools menu, hidden during active Tool usage */}
+      {currentStep !== 'tool' && (
+        <footer className="pt-8 pb-10 text-center text-xs opacity-75 border-t border-[var(--border-color)] mt-12 space-y-2">
+          <p className="font-semibold">🛠️ Tool Bazar — 260+ Free Everyday Tools Working 100% In Browser</p>
+          <div className="flex flex-wrap items-center justify-center gap-3 text-xs pt-1">
+            <button
+              onClick={() => setLegalModalType('privacy')}
+              className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+            >
+              Privacy Policy
+            </button>
+            <span className="opacity-40">•</span>
+            <button
+              onClick={() => setLegalModalType('terms')}
+              className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+            >
+              Terms of Service
+            </button>
+            <span className="opacity-40">•</span>
+            <button
+              onClick={() => setLegalModalType('contact')}
+              className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+            >
+              Contact
+            </button>
+          </div>
+          <p className="text-[11px] opacity-60">© {new Date().getFullYear()} Tool Bazar. Fast, Free & Secure.</p>
+        </footer>
+      )}
 
       {/* Policy and Terms Modal for AdSense */}
       <LegalModal
