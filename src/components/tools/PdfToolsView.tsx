@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import jsPDF from 'jspdf';
 import { Download, FileText, Upload, Image as ImageIcon, Grid, CheckSquare, Calendar, RefreshCw, Eye } from 'lucide-react';
 import { Tool } from '../../types';
+import { DownloadAdModal } from '../DownloadAdModal';
 
 interface PdfToolsViewProps {
   tool: Tool;
@@ -31,6 +32,25 @@ export const PdfToolsView: React.FC<PdfToolsViewProps> = ({ tool, onToast }) => 
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const pdfInspectInputRef = useRef<HTMLInputElement>(null);
+
+  // Sponsored Download Gate States
+  const [isDownloadModalOpen, setIsDownloadModalOpen] = useState<boolean>(false);
+  const [pendingDownloadFn, setPendingDownloadFn] = useState<(() => void) | null>(null);
+  const [pendingDownloadName, setPendingDownloadName] = useState<string>('document.pdf');
+
+  const triggerSponsoredDownload = (name: string, fn: () => void) => {
+    setPendingDownloadName(name);
+    setPendingDownloadFn(() => fn);
+    setIsDownloadModalOpen(true);
+  };
+
+  const executePendingDownload = () => {
+    if (pendingDownloadFn) {
+      pendingDownloadFn();
+    }
+    setIsDownloadModalOpen(false);
+    setPendingDownloadFn(null);
+  };
 
   // Handle Image Upload
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,8 +98,11 @@ export const PdfToolsView: React.FC<PdfToolsViewProps> = ({ tool, onToast }) => 
         );
       }
 
-      doc.save(`${docTitle.toLowerCase().replace(/\s+/g, '-')}.pdf`);
-      onToast('PDF downloaded successfully!');
+      const fileName = `${(docTitle || 'document').toLowerCase().replace(/\s+/g, '-')}.pdf`;
+      triggerSponsoredDownload(fileName, () => {
+        doc.save(fileName);
+        onToast('PDF downloaded successfully!');
+      });
     } catch {
       onToast('Error creating PDF');
     } finally {
@@ -582,6 +605,17 @@ export const PdfToolsView: React.FC<PdfToolsViewProps> = ({ tool, onToast }) => 
           <span>{isGenerating ? 'Generating...' : 'Download PDF Document'}</span>
         </button>
       </div>
+
+      {/* Sponsored Download Gate Modal */}
+      <DownloadAdModal
+        isOpen={isDownloadModalOpen}
+        fileName={pendingDownloadName}
+        onComplete={executePendingDownload}
+        onCancel={() => {
+          setIsDownloadModalOpen(false);
+          setPendingDownloadFn(null);
+        }}
+      />
     </div>
   );
 };

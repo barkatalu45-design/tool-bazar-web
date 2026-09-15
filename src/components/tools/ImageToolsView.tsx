@@ -25,6 +25,7 @@ import {
   Pipette,
 } from 'lucide-react';
 import { Tool } from '../../types';
+import { DownloadAdModal } from '../DownloadAdModal';
 
 interface ImageToolsViewProps {
   tool: Tool;
@@ -112,6 +113,25 @@ export const ImageToolsView: React.FC<ImageToolsViewProps> = ({ tool, onToast })
 
   // Filters
   const [filterType, setFilterType] = useState<'none' | 'grayscale' | 'sepia' | 'invert' | 'blackwhite' | 'blur'>('none');
+
+  // Sponsored Download Gate States
+  const [isDownloadModalOpen, setIsDownloadModalOpen] = useState<boolean>(false);
+  const [pendingDownloadFn, setPendingDownloadFn] = useState<(() => void) | null>(null);
+  const [pendingDownloadName, setPendingDownloadName] = useState<string>('downloaded-file');
+
+  const triggerSponsoredDownload = (name: string, fn: () => void) => {
+    setPendingDownloadName(name);
+    setPendingDownloadFn(() => fn);
+    setIsDownloadModalOpen(true);
+  };
+
+  const executePendingDownload = () => {
+    if (pendingDownloadFn) {
+      pendingDownloadFn();
+    }
+    setIsDownloadModalOpen(false);
+    setPendingDownloadFn(null);
+  };
   const [brightness, setBrightness] = useState<number>(100);
   const [contrast, setContrast] = useState<number>(100);
 
@@ -198,11 +218,14 @@ export const ImageToolsView: React.FC<ImageToolsViewProps> = ({ tool, onToast })
   // Download Extracted Audio
   const downloadAudio = (format: 'wav' | 'mp3') => {
     if (!audioUrl) return;
-    const a = document.createElement('a');
-    a.href = audioUrl;
-    a.download = `${videoFile?.name.replace(/\.[^/.]+$/, '') || 'audio'}.${format}`;
-    a.click();
-    onToast(`Downloaded as ${format.toUpperCase()}!`);
+    const fileName = `${videoFile?.name.replace(/\.[^/.]+$/, '') || 'audio'}.${format}`;
+    triggerSponsoredDownload(fileName, () => {
+      const a = document.createElement('a');
+      a.href = audioUrl;
+      a.download = fileName;
+      a.click();
+      onToast(`Downloaded as ${format.toUpperCase()}!`);
+    });
   };
 
   // Background Remover Execution
@@ -312,32 +335,35 @@ export const ImageToolsView: React.FC<ImageToolsViewProps> = ({ tool, onToast })
   // Download Resized Image
   const downloadProcessedImage = (ext: string = 'jpg', format: string = 'image/jpeg') => {
     if (!imageSrc) return;
-    const canvas = document.createElement('canvas');
-    canvas.width = targetWidth;
-    canvas.height = targetHeight;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const fileName = `${imageName}-resized.${ext}`;
+    triggerSponsoredDownload(fileName, () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-    const img = new Image();
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
-      canvas.toBlob(
-        (blob) => {
-          if (!blob) return;
-          setProcessedSize(blob.size);
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `${imageName}-resized.${ext}`;
-          a.click();
-          URL.revokeObjectURL(url);
-          onToast('Image resized and downloaded!');
-        },
-        format,
-        quality / 100
-      );
-    };
-    img.src = imageSrc;
+      const img = new Image();
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) return;
+            setProcessedSize(blob.size);
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            URL.revokeObjectURL(url);
+            onToast('Image resized and downloaded!');
+          },
+          format,
+          quality / 100
+        );
+      };
+      img.src = imageSrc;
+    });
   };
 
   // 1. VIDEO TO MP3 / AUDIO EXTRACTOR
@@ -961,6 +987,17 @@ export const ImageToolsView: React.FC<ImageToolsViewProps> = ({ tool, onToast })
           </div>
         </div>
       )}
+
+      {/* Sponsored Download Gate Modal */}
+      <DownloadAdModal
+        isOpen={isDownloadModalOpen}
+        fileName={pendingDownloadName}
+        onComplete={executePendingDownload}
+        onCancel={() => {
+          setIsDownloadModalOpen(false);
+          setPendingDownloadFn(null);
+        }}
+      />
     </div>
   );
 };

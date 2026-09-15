@@ -17,6 +17,7 @@ import { GeneratorView } from '../components/tools/GeneratorView';
 import { MiscellaneousView } from '../components/tools/MiscellaneousView';
 import { NotepadView } from '../components/tools/NotepadView';
 import { AdsterraDoubleBanner } from '../components/AdsterraBanner';
+import { SmartAdsRow } from '../components/SmartAdsRow';
 import { ArrowLeft, Search } from 'lucide-react';
 
 interface ToolPageProps {
@@ -153,6 +154,7 @@ export const ToolPage: React.FC<ToolPageProps> = ({
       isFavorite={isFavorite}
       onToggleFavorite={() => onToggleFavorite(tool.id)}
     >
+      <SmartAdsRow count={6} title="Sponsored Apps & Fast Downloads" />
       {renderToolComponent()}
       <AdsterraDoubleBanner />
     </ToolLayout>

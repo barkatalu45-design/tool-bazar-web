@@ -20,7 +20,9 @@ import { MiscellaneousView } from '../components/tools/MiscellaneousView';
 import { StylishTextGeneratorView } from '../components/tools/StylishTextGeneratorView';
 import { NotepadView } from '../components/tools/NotepadView';
 import { LegalModal } from '../components/legal/LegalModal';
-import { AdsterraBanner, AdsterraDoubleBanner, CompactAdBanner, AlwaysOnBottomAdBar } from '../components/AdsterraBanner';
+import { AdsterraBanner, AdsterraDoubleBanner, CompactAdBanner, AlwaysOnBottomAdBar, LargeBoxAd } from '../components/AdsterraBanner';
+import { SmartAdsRow } from '../components/SmartAdsRow';
+import { DownloadAdModal } from '../components/DownloadAdModal';
 
 interface HomePageProps {
   searchQuery: string;
@@ -578,6 +580,9 @@ export const HomePage: React.FC<HomePageProps> = ({
           Smart multilingual search: Type keywords in English, Roman Urdu, or Hindi
         </p>
       </div>
+
+      {/* Top Smart Mini Native Ads (4-6 ads row, rotating 50+ offline ads) */}
+      <SmartAdsRow count={6} title="Sponsored Apps & Quick Tools" />
 
       {/* Main Content Area */}
       <div className="content-area w-full">
