@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Header } from './components/Header';
+import { TopFixedEightAdStrip } from './components/TopFixedEightAdStrip';
+import { InterstitialSkipAdModal } from './components/InterstitialSkipAdModal';
 import { HomePage } from './pages/HomePage';
 import { ToolPage } from './pages/ToolPage';
 import { AntiAdBlockerModal } from './components/AntiAdBlockerModal';
@@ -93,6 +95,7 @@ export default function App() {
         className="min-h-screen flex flex-col font-sans antialiased transition-colors duration-200"
         style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-color)' }}
       >
+        <TopFixedEightAdStrip />
         <Header
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
@@ -145,6 +148,9 @@ export default function App() {
             <span>{toastMsg}</span>
           </div>
         )}
+
+        {/* Interstitial Skip Ad Modal (Pop-up after 40s/90s with Skip button) */}
+        <InterstitialSkipAdModal />
 
         {/* Anti-AdBlocker Detection Modal */}
         <AntiAdBlockerModal />
