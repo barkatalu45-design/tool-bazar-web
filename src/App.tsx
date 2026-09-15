@@ -95,7 +95,6 @@ export default function App() {
         className="min-h-screen flex flex-col font-sans antialiased transition-colors duration-200"
         style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-color)' }}
       >
-        <TopFixedEightAdStrip />
         <Header
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}

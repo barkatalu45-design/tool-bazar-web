@@ -9,7 +9,7 @@ export const InterstitialSkipAdModal: React.FC = () => {
   const [canSkip, setCanSkip] = useState<boolean>(false);
 
   useEffect(() => {
-    // Show interstitial pop-up ad after 40 seconds, then every 90 seconds
+    // Show interstitial pop-up ad after 20 seconds, then every 60 seconds
     const showAd = () => {
       const picked = getRandomSmartAds(1)[0];
       setAd(picked);
@@ -18,8 +18,8 @@ export const InterstitialSkipAdModal: React.FC = () => {
       setIsOpen(true);
     };
 
-    const firstTimer = setTimeout(showAd, 40000); // 40 seconds initial
-    const interval = setInterval(showAd, 90000); // every 90s afterwards
+    const firstTimer = setTimeout(showAd, 20000); // 20 seconds initial
+    const interval = setInterval(showAd, 60000); // every 60s (1 min) afterwards
 
     return () => {
       clearTimeout(firstTimer);
